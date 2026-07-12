@@ -35,6 +35,20 @@ export class Post {
   })
   privacy: PostPrivacy;
 
+  @Column({
+    name: 'likes_count',
+    type: 'int',
+    default: 0,
+  })
+  likesCount: number;
+
+  @Column({
+    name: 'comments_count',
+    type: 'int',
+    default: 0,
+  })
+  commentsCount: number;
+
   @ManyToOne(() => User, (user) => user.posts, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
@@ -48,7 +62,10 @@ export class Post {
   @OneToMany(() => Like, (like) => like.post)
   likes: Like[];
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn({
+    name: 'created_at',
+    type: 'timestamp with time zone',
+  })
   createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })

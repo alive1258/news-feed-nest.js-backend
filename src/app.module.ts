@@ -22,6 +22,8 @@ import { DataResponseInterceptor } from './common/interceptors/data-response/dat
 import { AccessTokenStrategy, RefreshTokenStrategy } from './auth/strategies';
 import { FileUploadsModule } from './common/file-uploads/file-uploads.modules';
 import { PostsModule } from './modules/posts/posts.module';
+import { CommentsModule } from './modules/comments/comments.module';
+import { LikesModule } from './modules/likes/likes.module';
 
 
 const ENV = process.env.NODE_ENV;
@@ -71,6 +73,8 @@ const ENV = process.env.NODE_ENV;
     DataQueryModule,
     FileUploadsModule,
     PostsModule,
+    CommentsModule,
+    LikesModule,
   
   ],
 
