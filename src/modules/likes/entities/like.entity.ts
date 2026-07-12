@@ -24,7 +24,6 @@ export class Like {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // User
   @ManyToOne(() => User, (user) => user.likes, {
     onDelete: 'CASCADE',
     nullable: false,
@@ -36,7 +35,6 @@ export class Like {
   @Column({ name: 'user_id', type: 'uuid' })
   userId: string;
 
-  // Post Like (nullable)
   @ManyToOne(() => Post, (post) => post.likes, {
     onDelete: 'CASCADE',
     nullable: true,
@@ -52,7 +50,6 @@ export class Like {
   })
   postId: string | null;
 
-  // Comment Like (nullable)
   @ManyToOne(() => Comment, (comment) => comment.likes, {
     onDelete: 'CASCADE',
     nullable: true,

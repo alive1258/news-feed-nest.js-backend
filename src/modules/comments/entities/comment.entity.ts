@@ -82,7 +82,7 @@ export class Comment {
 
   @CreateDateColumn({
     name: 'created_at',
-    type: 'timestamp with time zone', // 👈 'with time zone' (timestamptz) ব্যবহার করুন
+    type: 'timestamp with time zone',
   })
   createdAt: Date;
 

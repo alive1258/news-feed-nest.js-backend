@@ -156,7 +156,7 @@ export class LikesService {
     field: 'postId' | 'commentId',
     targetId: string,
     query: CommentPaginationQueryDto,
-    targetRepository: Repository<any>, // TypeORM-এর জেনেরিক মিসম্যাচ এড়াতে Repository<any> ব্যবহার করা হয়েছে
+    targetRepository: Repository<any>,
   ) {
     const page = query.page ?? 1;
     const limit = Math.min(query.limit ?? DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE);
@@ -172,12 +172,11 @@ export class LikesService {
       );
     }
 
-    // target-কে ILikeableEntity হিসেবে কাস্ট করেlikesCount বের করা হয়েছে
     const targetEntity = target as ILikeableEntity;
     const likesCount = targetEntity.likesCount ?? 0;
 
     const likers = await this.likeRepository.find({
-      where: { [field]: targetId } as any, // dynamic key টাইপিং সেফগার্ড
+      where: { [field]: targetId } as any,
       relations: {
         user: true,
       },

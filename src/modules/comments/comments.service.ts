@@ -153,12 +153,11 @@ export class CommentsService {
     const qb = this.commentRepository
       .createQueryBuilder('comment')
       .leftJoinAndSelect('comment.user', 'user')
-      // ১. leftJoin বদলে leftJoinAndSelect ব্যবহার করা হলো যাতে comment.likes লোড হয়
       .leftJoinAndSelect('comment.likes', 'like', 'like.userId = :userId', {
         userId: userId ? String(userId) : null,
       })
       .where('comment.postId = :postId', { postId })
-      .andWhere('comment.parentCommentId IS NULL') // শুধুমাত্র রুট-লেভেল কমেন্ট ফিল্টার
+      .andWhere('comment.parentCommentId IS NULL')
       .orderBy('comment.createdAt', 'DESC')
       .skip(skip)
       .take(limit);
@@ -169,7 +168,7 @@ export class CommentsService {
     const formattedComments = comments.map((comment) => ({
       id: comment.id,
       postId: comment.postId,
-      parentCommentId: comment.parentCommentId, // ২. DTO সিঙ্ক রাখার জন্য অ্যাড করা হলো
+      parentCommentId: comment.parentCommentId,
       author: {
         id: comment.user.id,
         name: `${comment.user.first_name || ''} ${comment.user.last_name || ''}`.trim(),
@@ -177,7 +176,7 @@ export class CommentsService {
       content: comment.content,
       timestamp: this.formatTimeAgo(comment.createdAt),
       likes: comment.likesCount,
-      // ৩. এখন comment.likes সফলভাবে অ্যারে হিসেবে চেক হবে
+
       isLiked: userId ? comment.likes && comment.likes.length > 0 : false,
       repliesCount: comment.repliesCount,
     }));
